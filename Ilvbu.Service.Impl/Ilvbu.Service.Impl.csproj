@@ -8,6 +8,7 @@
     <ProjectReference Include="..\Ilvbu.DataBase\Ilvbu.DataBase.csproj" />
     <ProjectReference Include="..\Ilvbu.Interface\Ilvbu.Interface.csproj" />
     <ProjectReference Include="..\Ilvbu.Service\Ilvbu.Service.csproj" />
+    <ProjectReference Include="..\Ilvbu\Ilvbu.csproj" />
   </ItemGroup>
 
   <ItemGroup>

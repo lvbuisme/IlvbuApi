@@ -10,11 +10,20 @@ namespace Ilvbu.DataBase
     {
 
         public virtual DbSet<UserInfo> UserInfo { get; set; }
+        public virtual DbSet< WxLoginRecord> WxLoginRecord { get; set; }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    base.OnConfiguring(optionsBuilder);
+        //    optionsBuilder.UseMySql("Data Source=ilvbu.xyz;port=3306;sslmode=none;Initial Catalog=ilvbu;user id=root;password=123456;charset=utf8");//配置连接字符串
+        //}
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public MyDbContext(DbContextOptions<MyDbContext> opt) : base(opt)
         {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySql("Data Source=localhost;port=3306;sslmode=none;Initial Catalog=ilvbu;user id=root;password=Cpic1234;charset=utf8");//配置连接字符串
+
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
 
     }

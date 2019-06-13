@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ilvbu.DataBase\Ilvbu.DataBase.csproj" />
     <ProjectReference Include="..\Ilvbu.Interface\Ilvbu.Interface.csproj" />
     <ProjectReference Include="..\Ilvbu.Service.Impl\Ilvbu.Service.Impl.csproj" />
     <ProjectReference Include="..\Ilvbu.Service\Ilvbu.Service.csproj" />

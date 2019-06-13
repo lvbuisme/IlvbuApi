@@ -5,15 +5,17 @@ using System.Text;
 
 namespace Ilvbu.DataBase.Models
 {
-    public class UserInfo
+    public class WxLoginRecord
     {
         [Key]
         public int Id { get; set; }
         [MaxLength(64)]
-        public string WechatID  { get; set; }
+        public string OpenId { get; set; }
+        [MaxLength(64)]
+        public string SessionKey { get; set; }
+        [MaxLength(64)]
+        public string ExpiresIn { get; set; }
         [MaxLength(128)]
-        public string Password { get; set; }
-        [MaxLength(128)]
-        public string UserName { get; set; }
+        public string Guid { get; set; }
     }
 }

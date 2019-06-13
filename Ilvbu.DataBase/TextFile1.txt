@@ -1,0 +1,3 @@
+﻿Enable-Migrations
+Add-Migration InitModel
+Update-DataBase –verbose
