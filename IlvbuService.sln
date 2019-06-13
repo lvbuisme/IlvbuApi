@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ilvbu.Service", "Ilvbu.Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ilvbu.Service.Impl", "Ilvbu.Service.Impl\Ilvbu.Service.Impl.csproj", "{D6A697DF-A852-4510-9758-1F976E21840D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ilvbu", "Ilvbu\Ilvbu.csproj", "{2D8B38AF-8B9D-45DE-914F-12AFB9FEE419}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ilvbu", "Ilvbu\Ilvbu.csproj", "{2D8B38AF-8B9D-45DE-914F-12AFB9FEE419}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
