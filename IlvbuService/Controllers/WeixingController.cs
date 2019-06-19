@@ -13,11 +13,11 @@ namespace IlvbuService.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class TestController : ControllerBase
+    public class WeixingController : ControllerBase
     {
         private readonly IWXAuthService _authService;
 
-        public TestController(IWXAuthService authService)
+        public WeixingController(IWXAuthService authService)
         {
             _authService = authService;
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Ilvbu;
 using Ilvbu.Interface.Arguments;
+using Ilvbu.Interface.Models;
 using Ilvbu.Interface.ResultModels;
 using Ilvbu.Service;
 using Microsoft.AspNetCore.Http;
@@ -36,7 +37,20 @@ namespace IlvbuService.Controllers
         public string Login(string code)
         {
             return _authService.GetToken(code);
- 
+         }
+        /// <summary>
+        /// 授权登录
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Test")]
+        public async Task<TestModel> Test()
+        {
+            TestModel testModel = new TestModel()
+            {
+                Guid = Guid.NewGuid().ToString(),
+                Message = "测试消息"
+            };
+            return testModel;
         }
         ///// <summary>
         ///// 回调处理

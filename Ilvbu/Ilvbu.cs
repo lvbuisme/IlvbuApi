@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,10 @@ namespace Ilvbu
         public static T ToObject<T>(this string str)
         {
             return JsonConvert.DeserializeObject<T>(str);
+        }
+        public static JObject ToJObject(this string str)
+        {
+            return (JObject)JsonConvert.DeserializeObject(str);
         }
     }
 }

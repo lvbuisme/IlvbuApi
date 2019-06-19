@@ -3,6 +3,7 @@ using Ilvbu.DataBase.Models;
 using Ilvbu.Interface.Models;
 using Ilvbu.Service;
 using Ilvbu.Service.Impl.Common;
+using Ilvbu.Weixin.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -243,17 +244,17 @@ namespace Ilvbu.Service
               this.secret,
               code);
             string result = NetHelper.Get(url);
-            JObject jObject = result.ToObject<JObject>();
-            string openId = jObject["openId"].ToString();
-            string session_key = jObject["session_key"].ToString();
-            string expires_in = jObject["expires_in"].ToString();
+            Jscode jObject = result.ToObject<Jscode>();
+            //string openId = jObject["openId"].ToString();
+            //string session_key = jObject["session_key"].ToString();
+            //string expires_in = jObject["expires_in"].ToString();
             Guid guid = Guid.NewGuid();
             _context.WxLoginRecord.Add(new WxLoginRecord()
             {
-                ExpiresIn = expires_in,
+                ExpiresIn = jObject.expires_in,
                 Guid = guid.ToString(),
-                OpenId = openId,
-                SessionKey = session_key
+                OpenId = jObject.openId,
+                SessionKey = jObject.session_key
             });
             _context.SaveChanges();
             return guid.ToString();
