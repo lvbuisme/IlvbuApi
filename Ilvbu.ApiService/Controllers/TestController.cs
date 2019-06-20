@@ -15,9 +15,9 @@ namespace IlvbuService.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-        private readonly IWXAuthService _authService;
+        private readonly IWXService _authService;
 
-        public TestController(IWXAuthService authService)
+        public TestController(IWXService authService)
         {
             _authService = authService;
         }

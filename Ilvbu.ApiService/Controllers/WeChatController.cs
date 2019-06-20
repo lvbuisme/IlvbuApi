@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ilvbu;
+using Ilvbu.DataBase;
 using Ilvbu.Interface.Arguments;
+using Ilvbu.Interface.DbModels;
 using Ilvbu.Interface.Models;
 using Ilvbu.Interface.ResultModels;
 using Ilvbu.Service;
@@ -15,19 +17,24 @@ namespace IlvbuService.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class WXController : Controller
+    public class WeChatController : WxController
     {
-        private readonly IWXAuthService _authService;
+        private readonly IWXService _wxService;
 
-        public WXController(IWXAuthService authService)
+        public WeChatController(IWXService wxService , MyDbContext context):base(context)
         {
-            _authService = authService;
+
+            _wxService = wxService;
         }
 
         [HttpPost("AddFood")]
-        public async Task<BaseResult> AddFood(AddFoodArg model) 
+        public async Task<BaseResult> AddFood(AddFoodArg addFoodArg) 
         {
-            return new BaseResult();
+           return await _wxService.AddFood(User, addFoodArg.FoodName);
+        }
+        public async Task<BaseResult<FoodRecordData[]>> GetFoodList()
+        {
+            return await _wxService.GetFoodList(User);
         }
         /// <summary>
         /// 授权登录
@@ -36,7 +43,7 @@ namespace IlvbuService.Controllers
         [HttpGet("Login")]
         public string Login(string code)
         {
-            return _authService.GetToken(code);
+            return _wxService.GetToken(code);
          }
         /// <summary>
         /// 授权登录

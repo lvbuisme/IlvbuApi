@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ilvbu.Service.Impl", "Ilvbu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ilvbu", "Ilvbu\Ilvbu.csproj", "{2D8B38AF-8B9D-45DE-914F-12AFB9FEE419}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IlvbuService", "IlvbuService\IlvbuService.csproj", "{44F94790-241C-46C3-89AF-4A3FD1DF9939}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{2D8B38AF-8B9D-45DE-914F-12AFB9FEE419}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D8B38AF-8B9D-45DE-914F-12AFB9FEE419}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D8B38AF-8B9D-45DE-914F-12AFB9FEE419}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F94790-241C-46C3-89AF-4A3FD1DF9939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F94790-241C-46C3-89AF-4A3FD1DF9939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F94790-241C-46C3-89AF-4A3FD1DF9939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F94790-241C-46C3-89AF-4A3FD1DF9939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,6 +11,7 @@ namespace Ilvbu.DataBase
 
         public virtual DbSet<UserInfo> UserInfo { get; set; }
         public virtual DbSet< WxLoginRecord> WxLoginRecord { get; set; }
+        public virtual DbSet<FoodRecord> FoodRecord { get; set; }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    base.OnConfiguring(optionsBuilder);
@@ -19,7 +20,7 @@ namespace Ilvbu.DataBase
 
         public MyDbContext(DbContextOptions<MyDbContext> opt) : base(opt)
         {
-
+           
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

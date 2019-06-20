@@ -1,3 +1,3 @@
 ﻿Enable-Migrations
-Add-Migration InitModel
-Update-DataBase –verbose
+Add-Migration V1.1 -Context Ilvbu.DataBase.MyDbContext -project Ilvbu.DataBase
+Update-DataBase V1.1 -Context Ilvbu.DataBase.MyDbContext -project Ilvbu.DataBase

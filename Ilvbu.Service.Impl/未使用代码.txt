@@ -1,53 +1,4 @@
-﻿using Ilvbu.DataBase;
-using Ilvbu.DataBase.Models;
-using Ilvbu.Interface.Models;
-using Ilvbu.Service;
-using Ilvbu.Service.Impl.Common;
-using Ilvbu.Weixin.Models;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-
-namespace Ilvbu.Service
-{
-    /// <summary>
-    /// 网页授权逻辑处理，
-    /// 处理三步操作，处理成功，返回用户基本信息
-    /// </summary>
-    public class WXAuthService : IWXAuthService
-    {
-        private readonly ILogger<WXAuthService> _logger;
-        private readonly MyDbContext _context;
-        public WXAuthService(ILogger<WXAuthService> logger, MyDbContext context)
-        {
-            _logger = logger;
-            _context = context;
-        }
-
-        #region 基本信息定义
-        /// <summary>
-        /// 公众号的唯一标识
-        /// </summary>
-        private string appid = "wxf2fbcb7b1b56771e";
-        /// <summary>
-        /// 公众号的appsecret
-        /// </summary>
-        private string secret = "461bb3cfebd193e233beab0c28786420";
-        /// <summary>
-        /// 回调url地址
-        /// </summary>
-        private string redirect_uri = "snsapi_userinfo";
-        /// <summary>
-        /// 获取微信用户基本信息使用snsapi_userinfo模式
-        /// 如果使用静默授权，无法获取用户基本信息但可以获取到openid
-        /// </summary>
-        //private string scope;
-
-
-
-        #endregion
-
+﻿
         //#region 请求过程信息
         ///// <summary>
         ///// 第一步获取到的Code 值
@@ -235,30 +186,3 @@ namespace Ilvbu.Service
         //    return url;
         //}
         //#endregion
-
-
-        public string GetToken(string code)
-        {
-            string url = string.Format("https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code",
-              this.appid,
-              this.secret,
-              code);
-            string result = NetHelper.Get(url);
-            Jscode jObject = result.ToObject<Jscode>();
-            //string openId = jObject["openId"].ToString();
-            //string session_key = jObject["session_key"].ToString();
-            //string expires_in = jObject["expires_in"].ToString();
-            Guid guid = Guid.NewGuid();
-            _context.WxLoginRecord.Add(new WxLoginRecord()
-            {
-                ExpiresIn = jObject.expires_in,
-                Guid = guid.ToString(),
-                OpenId = jObject.openId,
-                SessionKey = jObject.session_key
-            });
-            _context.SaveChanges();
-            return guid.ToString();
-        }
-
-    }
-}

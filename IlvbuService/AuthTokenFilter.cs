@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using WebApiClient;
 using WebApiClient.Contexts;
 
-namespace Ilvbu.Service
+namespace IlvbuService
 {
     public class AuthTokenFilter : IApiActionFilter
     {

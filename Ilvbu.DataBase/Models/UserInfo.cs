@@ -10,7 +10,7 @@ namespace Ilvbu.DataBase.Models
         [Key]
         public int Id { get; set; }
         [MaxLength(64)]
-        public string WechatID  { get; set; }
+        public string OpenId  { get; set; }
         [MaxLength(128)]
         public string Password { get; set; }
         [MaxLength(128)]

@@ -6,5 +6,6 @@ namespace Ilvbu.Interface.Arguments
 {
    public  class AddFoodArg
     {
+        public string FoodName { get; set; }
     }
 }

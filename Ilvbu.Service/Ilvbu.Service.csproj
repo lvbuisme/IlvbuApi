@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ilvbu.Interface\Ilvbu.Interface.csproj" />
+    <ProjectReference Include="..\Ilvbu\Ilvbu.csproj" />
   </ItemGroup>
 
 </Project>

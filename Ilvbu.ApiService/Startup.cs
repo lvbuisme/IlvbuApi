@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Ilvbu.DataBase;
 using Ilvbu.Service;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +32,8 @@ namespace IlvbuService
             {
                 opt.UseMySql("Data Source=ilvbu.xyz;port=3306;sslmode=none;Initial Catalog=ilvbu;user id=root;password=123456;charset=utf8");
             });
-            services.AddTransient<IWXAuthService, WXAuthService>();
+            services.AddAutoMapper();
+            services.AddTransient<IWXService, WXService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
