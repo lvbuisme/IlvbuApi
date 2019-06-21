@@ -20,6 +20,6 @@ namespace Ilvbu.Service
         //void GetUserInfo();
         string GetToken(string code);
         Task<BaseResult> AddFood(User user, string foodName);
-        Task<BaseResult<FoodRecordData[]>> GetFoodList(User user);
+        Task<BaseResult<FoodRecordData[]>> GetFoodList(User user, DateTime? dateTime);
     }
 }

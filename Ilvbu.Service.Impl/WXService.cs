@@ -117,11 +117,21 @@ namespace Ilvbu.Service
             }
 
         }
-        public async Task<BaseResult<FoodRecordData[]>> GetFoodList(User user)
+        public async Task<BaseResult<FoodRecordData[]>> GetFoodList(User user,DateTime? dateTime)
         {
             try
             {
-                FoodRecord[] foodRecords =await _context.FoodRecord.Where(c=>c.UserId == user.UserId).ToArrayAsync();
+                IQueryable<FoodRecord> DbfoodRecords = _context.FoodRecord.Where(c => c.UserId == user.UserId);
+                if (dateTime != null)
+                {
+                    DateTime dayTime = Convert.ToDateTime(dateTime.Value.ToString("yyyy-MM-dd"));
+                    DbfoodRecords = DbfoodRecords.Where(c => c.CreateTime < dayTime.AddHours(24) && c.CreateTime >= dayTime);
+                }
+                else
+                {
+                    DbfoodRecords = DbfoodRecords.Where(c => c.CreateTime > DateTime.Today.AddDays(-3));
+                }
+                FoodRecord[] foodRecords =await DbfoodRecords.ToArrayAsync();
                 FoodRecordData[] foodRecordDatas = _mapper.Map<FoodRecordData[]>(foodRecords);
                 return BaseResult<FoodRecordData[]>.From(foodRecordDatas);
             }

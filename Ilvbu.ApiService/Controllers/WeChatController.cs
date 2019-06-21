@@ -32,9 +32,10 @@ namespace IlvbuService.Controllers
         {
            return await _wxService.AddFood(User, addFoodArg.FoodName);
         }
-        public async Task<BaseResult<FoodRecordData[]>> GetFoodList()
+        [HttpGet("FoodList")]
+        public async Task<BaseResult<FoodRecordData[]>> GetFoodList(DateTime? dateTime)
         {
-            return await _wxService.GetFoodList(User);
+            return await _wxService.GetFoodList(User,dateTime);
         }
         /// <summary>
         /// 授权登录
