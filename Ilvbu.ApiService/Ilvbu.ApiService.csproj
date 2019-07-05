@@ -5,6 +5,7 @@
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject />
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ilvbu.AI\Ilvbu.AI.csproj" />
+    <ProjectReference Include="..\Ilvbu.Auth\Ilvbu.Auth.csproj" />
     <ProjectReference Include="..\Ilvbu.DataBase\Ilvbu.DataBase.csproj" />
     <ProjectReference Include="..\Ilvbu.Interface\Ilvbu.Interface.csproj" />
     <ProjectReference Include="..\Ilvbu.Service.Impl\Ilvbu.Service.Impl.csproj" />

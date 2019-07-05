@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ilvbu.Auth\Ilvbu.Auth.csproj" />
     <ProjectReference Include="..\Ilvbu.DataBase\Ilvbu.DataBase.csproj" />
     <ProjectReference Include="..\Ilvbu\Ilvbu.csproj" />
   </ItemGroup>

@@ -3,14 +3,16 @@ using System;
 using Ilvbu.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Ilvbu.DataBase.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190702094603_V1.2")]
+    partial class V12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,14 +106,8 @@ namespace Ilvbu.DataBase.Migrations
                     b.Property<string>("Echostr")
                         .HasMaxLength(128);
 
-                    b.Property<string>("Message")
-                        .HasMaxLength(1000);
-
                     b.Property<string>("Nonce")
                         .HasMaxLength(128);
-
-                    b.Property<string>("PostData")
-                        .HasMaxLength(1000);
 
                     b.Property<string>("Signature")
                         .HasMaxLength(128);

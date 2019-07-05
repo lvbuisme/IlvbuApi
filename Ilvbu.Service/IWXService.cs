@@ -1,4 +1,5 @@
-﻿using Ilvbu.Interface.DbModels;
+﻿using Ilvbu.Auth;
+using Ilvbu.Interface.DbModels;
 using Ilvbu.Interface.Models;
 using Ilvbu.Interface.ResultModels;
 using System;
@@ -21,5 +22,9 @@ namespace Ilvbu.Service
         string GetToken(string code);
         Task<BaseResult> AddFood(User user, string foodName);
         Task<BaseResult<FoodRecordData[]>> GetFoodList(User user, DateTime? dateTime);
+        Task<BaseResult<int>> AddFoodInfo(string foodName);
+        Task<BaseResult> AddFoodImagePath(int id, string imagePath);
+        Task<BaseResult<FoodInfoData[]>> GetFoodInfo();
+        Task<BaseResult<string>> GetFoodImagePath(int id);
     }
 }

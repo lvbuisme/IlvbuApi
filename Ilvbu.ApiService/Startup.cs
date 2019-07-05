@@ -30,10 +30,11 @@ namespace IlvbuService
             services.AddDbContext<MyDbContext>(
             opt =>
             {
-                opt.UseMySql("Data Source=ilvbu.xyz;port=3306;sslmode=none;Initial Catalog=ilvbu;user id=root;password=123456;charset=utf8");
+                opt.UseMySql("Data Source=ilvbu.xyz;port=3306;sslmode=none;Initial Catalog=ilvbu;user id=root;password=8ATnUieGDpUhr45XeDCp4G7SkUJ6RDQv;charset=utf8");
             });
             services.AddAutoMapper();
             services.AddTransient<IWXService, WXService>();
+            services.AddTransient<IWXOAService, WXOAService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

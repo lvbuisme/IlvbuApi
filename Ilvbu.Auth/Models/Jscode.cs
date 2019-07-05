@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ilvbu.Weixin.Models
+namespace Ilvbu.Auth.Models
 {
-    public class Jscode
+    public class WeiXinJscode
     {
         public string openId { get; set; }
         public string session_key { get; set; }

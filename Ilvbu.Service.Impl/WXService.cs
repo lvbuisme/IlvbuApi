@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using Ilvbu.Auth;
+using Ilvbu.Auth.Models;
 using Ilvbu.DataBase;
 using Ilvbu.DataBase.Models;
 using Ilvbu.Interface.DbModels;
 using Ilvbu.Interface.Models;
 using Ilvbu.Interface.ResultModels;
 using Ilvbu.Service;
-using Ilvbu.Service.Impl.Common;
-using Ilvbu.Weixin.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -59,8 +59,8 @@ namespace Ilvbu.Service
               this._appid,
               this._secret,
               code);
-            string result = NetHelper.Get(url);
-            Jscode jscode = result.ToObject<Jscode>();
+            WeiXinJscode jscode = NetHelper.HttpGet<WeiXinJscode>(url);
+          
             //string openId = jObject["openId"].ToString();
             //string session_key = jObject["session_key"].ToString();
             //string expires_in = jObject["expires_in"].ToString();
@@ -139,6 +139,67 @@ namespace Ilvbu.Service
             {
                 _logger.LogError(e, "");
                 return new BaseResult<FoodRecordData[]>(-1, e.Message);
+            }
+        }
+        public async Task<BaseResult<int>> AddFoodInfo(string foodName)
+        {
+            try
+            {
+                FoodInfo foodInfo = new FoodInfo()
+                {
+                    FoodName = foodName
+                };
+                _context.FoodInfo.Add(foodInfo);
+                await _context.SaveChangesAsync();
+                return BaseResult<int>.From(foodInfo.Id);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, "");
+                return new BaseResult<int>(-1, e.Message);
+            }           
+        }
+        public async Task<BaseResult> AddFoodImagePath(int id,string imagePath)
+        {
+            try
+            {
+                FoodInfo foodInfo = _context.FoodInfo.FirstOrDefault(c => c.Id == id);
+                foodInfo.ImagePath = imagePath;
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "");
+                return new BaseResult(-1, e.Message);
+            }
+            return new BaseResult();
+        }
+        public async Task<BaseResult<FoodInfoData[]>> GetFoodInfo()
+        {
+            try
+            {
+                FoodInfo[] foodInfos = _context.FoodInfo.ToArray();
+                FoodInfoData[] foodInfoDatas = _mapper.Map<FoodInfoData[]>(foodInfos);
+                return  BaseResult<FoodInfoData[]>.From(foodInfoDatas);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, "");
+                return new BaseResult<FoodInfoData[]>(-1, e.Message);
+            }
+    
+        }
+        public async Task<BaseResult<string>> GetFoodImagePath(int id)
+        {
+            try
+            {
+                FoodInfo foodInfos = _context.FoodInfo.FirstOrDefault(c => c.Id == id);
+                return BaseResult<string>.From(foodInfos.ImagePath);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "");
+                return new BaseResult<string>(-1, e.Message);
             }
 
         }

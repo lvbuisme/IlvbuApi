@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ilvbu
+namespace Ilvbu.Auth
 {
     public class User
     {

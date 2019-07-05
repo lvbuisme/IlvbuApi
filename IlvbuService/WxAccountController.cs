@@ -11,7 +11,7 @@ using System.Text;
 
 namespace IlvbuService
 {
-    public class WxController :Controller
+    public class WxAccountController : Controller
     {
         //private WxAuthInfo _wxAuthInfo;
         //public WxAuthInfo WxAuthInfo
@@ -29,7 +29,7 @@ namespace IlvbuService
         //    }
         //}
         private MyDbContext _context;
-        public WxController(MyDbContext context)
+        public WxAccountController(MyDbContext context)
         {
             _context = context;
         }
@@ -51,6 +51,7 @@ namespace IlvbuService
         {
             get
             {
+                return null;
                 if (_user == null)
                 {
                     _user = _context.WxLoginRecord.Include(c => c.UserInfo).Where(c => c.Guid.Equals(Token)).Select(c => new User()

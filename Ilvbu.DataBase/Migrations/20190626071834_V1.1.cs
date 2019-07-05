@@ -9,6 +9,20 @@ namespace Ilvbu.DataBase.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "FoodInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FoodName = table.Column<string>(maxLength: 64, nullable: true),
+                    ImagePath = table.Column<string>(maxLength: 500, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FoodInfo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserInfo",
                 columns: table => new
                 {
@@ -79,6 +93,9 @@ namespace Ilvbu.DataBase.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "FoodInfo");
+
             migrationBuilder.DropTable(
                 name: "FoodRecord");
 

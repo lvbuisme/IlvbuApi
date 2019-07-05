@@ -12,6 +12,8 @@ namespace Ilvbu.DataBase
         public virtual DbSet<UserInfo> UserInfo { get; set; }
         public virtual DbSet< WxLoginRecord> WxLoginRecord { get; set; }
         public virtual DbSet<FoodRecord> FoodRecord { get; set; }
+        public virtual DbSet<FoodInfo> FoodInfo { get; set; }
+        public virtual DbSet<WxOfficialPlatformLoginRecord> WxOfficialPlatformLoginRecord { get; set; }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    base.OnConfiguring(optionsBuilder);

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ilvbu.DataBase.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20190620050240_V1.1")]
+    [Migration("20190626071834_V1.1")]
     partial class V11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,6 +18,22 @@ namespace Ilvbu.DataBase.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("Ilvbu.DataBase.Models.FoodInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FoodName")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("ImagePath")
+                        .HasMaxLength(500);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FoodInfo");
+                });
 
             modelBuilder.Entity("Ilvbu.DataBase.Models.FoodRecord", b =>
                 {

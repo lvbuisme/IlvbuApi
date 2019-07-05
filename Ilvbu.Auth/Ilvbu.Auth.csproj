@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ilvbu.Auth\Ilvbu.Auth.csproj" />
-    <ProjectReference Include="..\Ilvbu.Interface\Ilvbu.Interface.csproj" />
     <ProjectReference Include="..\Ilvbu\Ilvbu.csproj" />
   </ItemGroup>
 
