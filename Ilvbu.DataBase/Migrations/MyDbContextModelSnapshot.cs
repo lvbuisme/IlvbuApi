@@ -52,6 +52,36 @@ namespace Ilvbu.DataBase.Migrations
                     b.ToTable("FoodRecord");
                 });
 
+            modelBuilder.Entity("Ilvbu.DataBase.Models.Rubbish", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("RubbishName")
+                        .HasMaxLength(64);
+
+                    b.Property<int>("RubbishTypeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RubbishTypeId");
+
+                    b.ToTable("Rubbish");
+                });
+
+            modelBuilder.Entity("Ilvbu.DataBase.Models.RubbishType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("RubbishTypeName")
+                        .HasMaxLength(64);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RubbishType");
+                });
+
             modelBuilder.Entity("Ilvbu.DataBase.Models.UserInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -129,6 +159,14 @@ namespace Ilvbu.DataBase.Migrations
                     b.HasOne("Ilvbu.DataBase.Models.UserInfo", "UserInfo")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Ilvbu.DataBase.Models.Rubbish", b =>
+                {
+                    b.HasOne("Ilvbu.DataBase.Models.RubbishType", "RubbishType")
+                        .WithMany()
+                        .HasForeignKey("RubbishTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

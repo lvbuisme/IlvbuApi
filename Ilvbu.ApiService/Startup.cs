@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Ilvbu.DataBase;
 using Ilvbu.Service;
+using Ilvbu.Service.Impl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,8 @@ namespace IlvbuService
             services.AddAutoMapper();
             services.AddTransient<IWXService, WXService>();
             services.AddTransient<IWXOAService, WXOAService>();
+            services.AddTransient<IRubbishService, RubbishService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -48,5 +51,7 @@ namespace IlvbuService
 
             app.UseMvc();
         }
+
+        
     }
 }

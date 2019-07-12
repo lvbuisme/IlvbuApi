@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ilvbu.DataBase.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20190626071834_V1.1")]
+    [Migration("20190712082346_V1.1")]
     partial class V11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,36 @@ namespace Ilvbu.DataBase.Migrations
                     b.ToTable("FoodRecord");
                 });
 
+            modelBuilder.Entity("Ilvbu.DataBase.Models.Rubbish", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("RubbishName")
+                        .HasMaxLength(64);
+
+                    b.Property<int>("RubbishTypeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RubbishTypeId");
+
+                    b.ToTable("Rubbish");
+                });
+
+            modelBuilder.Entity("Ilvbu.DataBase.Models.RubbishType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("RubbishTypeName")
+                        .HasMaxLength(64);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RubbishType");
+                });
+
             modelBuilder.Entity("Ilvbu.DataBase.Models.UserInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -96,11 +126,49 @@ namespace Ilvbu.DataBase.Migrations
                     b.ToTable("WxLoginRecord");
                 });
 
+            modelBuilder.Entity("Ilvbu.DataBase.Models.WxOfficialPlatformLoginRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("Echostr")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Nonce")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("PostData")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Signature")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Timestamp")
+                        .HasMaxLength(128);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WxOfficialPlatformLoginRecord");
+                });
+
             modelBuilder.Entity("Ilvbu.DataBase.Models.FoodRecord", b =>
                 {
                     b.HasOne("Ilvbu.DataBase.Models.UserInfo", "UserInfo")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Ilvbu.DataBase.Models.Rubbish", b =>
+                {
+                    b.HasOne("Ilvbu.DataBase.Models.RubbishType", "RubbishType")
+                        .WithMany()
+                        .HasForeignKey("RubbishTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -2,8 +2,8 @@
 
 
 
-Add-Migration V1.3 -Context Ilvbu.DataBase.MyDbContext -project Ilvbu.DataBase
+Add-Migration V1.1 -Context Ilvbu.DataBase.MyDbContext -project Ilvbu.DataBase
 
 
 
-Update-DataBase V1.3 -Context Ilvbu.DataBase.MyDbContext -project Ilvbu.DataBase
+Update-DataBase V1.1 -Context Ilvbu.DataBase.MyDbContext -project Ilvbu.DataBase

@@ -76,6 +76,14 @@ namespace Ilvbu.AI.Baidu
         {
             public string[] SYS_REMEMBERED_SKILLS { get; set; }
         }
-       
+        public  class BaiduSpeechResult
+        {
+            public string corpus_no { get; set; }
+            public string err_msg { get; set; }
+            public string err_no { get; set; }
+            public string[] result { get; set; }
+            public string sn { get; set; }
+        }
+
     }
 }

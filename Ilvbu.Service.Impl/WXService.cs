@@ -15,7 +15,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ilvbu.Service
+namespace Ilvbu.Service.Impl
 {
     /// <summary>
     /// 网页授权逻辑处理，

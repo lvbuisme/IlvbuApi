@@ -68,6 +68,10 @@ namespace Ilvbu.Weixin
                         WxXmlModel.EventKey = rootElement.SelectSingleNode("EventKey").InnerText;
                     }
                     break;
+                case "voice":
+                    WxXmlModel.MediaId = rootElement.SelectSingleNode("MediaId").InnerText;
+                    WxXmlModel.Recognition= rootElement.SelectSingleNode("Recognition").InnerText;
+                    break;
                 default:
                     break;
             }

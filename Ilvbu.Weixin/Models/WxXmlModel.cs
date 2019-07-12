@@ -62,5 +62,14 @@ namespace Ilvbu.Weixin.Models
         /// 二维码的ticket，可以用来换取二维码
         /// </summary>
         public string Ticket { get; set; }
+        /// <summary>
+        /// 媒体文件Id
+        /// </summary>
+        public string MediaId { get; set; }
+        /// <summary>
+        /// 微信语音识别结果
+        /// </summary>
+        public string Recognition { get; set; }
+
     }
 }

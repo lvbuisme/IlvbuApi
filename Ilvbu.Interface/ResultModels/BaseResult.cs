@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ilvbu.Interface.ResultModels
+namespace Ilvbu
 {
     public partial class BaseResult
     {

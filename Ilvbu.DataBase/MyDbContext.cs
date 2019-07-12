@@ -14,6 +14,8 @@ namespace Ilvbu.DataBase
         public virtual DbSet<FoodRecord> FoodRecord { get; set; }
         public virtual DbSet<FoodInfo> FoodInfo { get; set; }
         public virtual DbSet<WxOfficialPlatformLoginRecord> WxOfficialPlatformLoginRecord { get; set; }
+        public virtual DbSet<Rubbish> Rubbish { get; set; }
+        public virtual DbSet<RubbishType> RubbishType { get; set; }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    base.OnConfiguring(optionsBuilder);

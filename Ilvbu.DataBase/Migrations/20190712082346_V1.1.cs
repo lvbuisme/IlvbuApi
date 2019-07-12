@@ -23,6 +23,19 @@ namespace Ilvbu.DataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RubbishType",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    RubbishTypeName = table.Column<string>(maxLength: 64, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RubbishType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserInfo",
                 columns: table => new
                 {
@@ -35,6 +48,45 @@ namespace Ilvbu.DataBase.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserInfo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WxOfficialPlatformLoginRecord",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Signature = table.Column<string>(maxLength: 128, nullable: true),
+                    Timestamp = table.Column<string>(maxLength: 128, nullable: true),
+                    Nonce = table.Column<string>(maxLength: 128, nullable: true),
+                    Echostr = table.Column<string>(maxLength: 128, nullable: true),
+                    PostData = table.Column<string>(maxLength: 1000, nullable: true),
+                    Message = table.Column<string>(maxLength: 1000, nullable: true),
+                    CreateTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WxOfficialPlatformLoginRecord", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rubbish",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    RubbishName = table.Column<string>(maxLength: 64, nullable: true),
+                    RubbishTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rubbish", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rubbish_RubbishType_RubbishTypeId",
+                        column: x => x.RubbishTypeId,
+                        principalTable: "RubbishType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,6 +138,11 @@ namespace Ilvbu.DataBase.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Rubbish_RubbishTypeId",
+                table: "Rubbish",
+                column: "RubbishTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WxLoginRecord_UserId",
                 table: "WxLoginRecord",
                 column: "UserId");
@@ -100,7 +157,16 @@ namespace Ilvbu.DataBase.Migrations
                 name: "FoodRecord");
 
             migrationBuilder.DropTable(
+                name: "Rubbish");
+
+            migrationBuilder.DropTable(
                 name: "WxLoginRecord");
+
+            migrationBuilder.DropTable(
+                name: "WxOfficialPlatformLoginRecord");
+
+            migrationBuilder.DropTable(
+                name: "RubbishType");
 
             migrationBuilder.DropTable(
                 name: "UserInfo");
