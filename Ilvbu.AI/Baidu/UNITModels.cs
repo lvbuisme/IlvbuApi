@@ -85,5 +85,18 @@ namespace Ilvbu.AI.Baidu
             public string sn { get; set; }
         }
 
+        public class BaiduImageRecognitionResult
+        {
+            public string log_id { get; set; }
+            public int result_num { get; set; }
+            public BaiduImageResult[] result { get; set; }
+        }
+        public class BaiduImageResult
+        {
+            public double score { get; set; }
+            public string root { get; set; }
+            public string keyword { get; set; }
+        }
+
     }
 }

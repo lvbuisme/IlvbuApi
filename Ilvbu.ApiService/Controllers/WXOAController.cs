@@ -63,7 +63,10 @@ namespace IlvbuService.Controllers
             string postData = Encoding.UTF8.GetString(buffer);
             _logger.Log( LogLevel.Debug,signature+ timestamp+ nonce+postData);
             Console.WriteLine("signature:"+signature+ ",timestamp:" + timestamp + ",nonce:" + nonce + ",postData:" + postData);
-            return await _WXOAService.ReviceMessag(signature,timestamp,nonce,postData,IlvbuStatic.baiduAuth.access_token);
+            string token1 = IlvbuStatic.baiduAIAuth.access_token;
+            string token2 = IlvbuStatic.baiduImageAuth.access_token;
+            string token3 = IlvbuStatic.weixinAuth.access_token;
+            return await _WXOAService.ReviceMessag(signature,timestamp,nonce,postData, token1, token2, token3);
         }
     }
 }

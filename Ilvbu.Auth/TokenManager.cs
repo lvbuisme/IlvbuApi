@@ -7,9 +7,15 @@ namespace Ilvbu.Auth
 {
     public class BaiduAIAuth
     {
-        public static BaiduAuthResult GetToken()
+        public static BaiduAuthResult GetAIToken()
         {
             string Tokenhost = @"https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=GwHZaNvnPZ4yAzkCx6Va9yfN&client_secret=FrxvBLZDA4Bmv39mHkSmhFysq57MI7Iq ";
+            BaiduAuthResult baiduAuthResult = NetHelper.HttpGet<BaiduAuthResult>(Tokenhost);
+            return baiduAuthResult;
+        }
+        public static BaiduAuthResult GetImageToken()
+        {
+            string Tokenhost = @"https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=4Ebj5niSYWlXvuhvKGL7CcgZ&client_secret=21GajBNbMqp1GLsgOXvZCHiNVZpSAQAr";
             BaiduAuthResult baiduAuthResult = NetHelper.HttpGet<BaiduAuthResult>(Tokenhost);
             return baiduAuthResult;
         }

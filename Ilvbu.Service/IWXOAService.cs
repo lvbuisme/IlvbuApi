@@ -14,7 +14,7 @@ namespace Ilvbu.Service
     public interface IWXOAService
     {
         Task<int> Check(string signature, string timestamp, string nonce, string echostr);
-        Task<string> ReviceMessag(string sMsgSignature, string sTimeStamp, string sNonce, string sPostData,string token);
+        Task<string> ReviceMessag(string sMsgSignature, string sTimeStamp, string sNonce, string sPostData, string baiduAiToken, string baiduImagetoken, string weixinToken);
 
     }
 }

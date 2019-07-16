@@ -11,17 +11,30 @@ namespace Ilvbu.ApiService
 {
     public class IlvbuStatic
     {
-        private static BaiduAuthResult _baiduAuth;
+        private static BaiduAuthResult _baiduAIAuth;
 
-        public static BaiduAuthResult baiduAuth
+        public static BaiduAuthResult baiduAIAuth
         {
             get
             {
-                if (_baiduAuth == null)
+                if (_baiduAIAuth == null)
                 {
-                    _baiduAuth = BaiduAIAuth.GetToken();
+                    _baiduAIAuth = BaiduAIAuth.GetAIToken();
                 }
-                return _baiduAuth;
+                return _baiduAIAuth;
+            }
+        }
+        private static BaiduAuthResult _baiduImageAuth;
+
+        public static BaiduAuthResult baiduImageAuth
+        {
+            get
+            {
+                if (_baiduImageAuth == null)
+                {
+                    _baiduImageAuth = BaiduAIAuth.GetImageToken();
+                }
+                return _baiduImageAuth;
             }
         }
         private static WeixinAuthResult _weixinAuth;
@@ -30,7 +43,7 @@ namespace Ilvbu.ApiService
         {
             get
             {
-                if (_baiduAuth == null)
+                if (_weixinAuth == null)
                 {
                     _weixinAuth = WeixinAuth.GetToken();
                 }

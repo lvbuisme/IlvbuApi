@@ -14,7 +14,9 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -32,11 +34,34 @@ namespace Ilvbu.Service.Impl
         private string sToken = "ilvbu";
         private string sAppID = "wx2dcb3e7144a271d9";
         private string sEncodingAESKey = "OEt3gN6PxtYPope9Tq8JAm8JDB3R51D7ahWcp3Qezg1";
+        private static Dictionary<string, RubbishType> _rubbishTypeNames;
         public WXOAService(ILogger<IWXOAService> logger, MyDbContext context, IMapper mapper)
         {
             _logger = logger;
             _context = context;
             _mapper = mapper;
+            
+        }
+        public Dictionary<string, RubbishType> RubbishTypeNames
+        {
+            get
+            {
+                if (_rubbishTypeNames == null)
+                {
+                    string rubbishFm = "是{0}";
+                    if (_rubbishTypeNames == null)
+                    {
+                        var rubbishTNs = _context.RubbishType.ToArray();
+                        _rubbishTypeNames = new Dictionary<string, RubbishType>();
+                        foreach (var ru in rubbishTNs)
+                        {
+                            _rubbishTypeNames.Add(string.Format(rubbishFm, ru.RubbishTypeName), ru) ;
+                        }
+                    }
+                }
+                return _rubbishTypeNames;
+
+            }
         }
 
         public async Task<int> Check(string signature, string timestamp, string nonce, string echostr)
@@ -55,7 +80,7 @@ namespace Ilvbu.Service.Impl
             return 0;
         }
 
-        public async Task<string> ReviceMessag(string sMsgSignature, string sTimeStamp, string sNonce, string sPostData, string token)
+        public async Task<string> ReviceMessag(string sMsgSignature, string sTimeStamp, string sNonce, string sPostData, string baiduAiToken,string baiduImagetoken,string weixinToken)
         {
             string encryptMsg = "";
             _context.WxOfficialPlatformLoginRecord.Add(new WxOfficialPlatformLoginRecord()
@@ -82,13 +107,13 @@ namespace Ilvbu.Service.Impl
                 switch (wxXmlModel.MsgType)
                 {
                     case "text"://文本
-                        encryptMsg = WxTextAnalytical(wxXmlModel, token);
+                        encryptMsg = WxTextAnalytical(wxXmlModel, baiduAiToken);
                         break;
                     case "image"://图片
-                        encryptMsg = "图片还没有办法识别哦,期待下次更新";
+                        encryptMsg = WxImageAnalytical(wxXmlModel,baiduImagetoken,weixinToken);
                         break;
                     case "voice":
-                        encryptMsg = WxVoiceAnalytical(wxXmlModel, token, null);
+                        encryptMsg = WxVoiceAnalytical(wxXmlModel, baiduAiToken, null);
                         break;
                     default:
                         break;
@@ -117,8 +142,12 @@ namespace Ilvbu.Service.Impl
                 {
                     if (wxXmlModel.Content.Contains("是什么垃圾"))
                     {
-                        string rubbishName = wxXmlModel.Content.Replace("是什么垃圾", string.Empty);
+                        string rubbishName = DisposeName(wxXmlModel.Content, "是什么垃圾");
                         wxXmlModel.Content = RubbishDispose(rubbishName);
+                    }
+                    else if (IsAddRubbishType(wxXmlModel.Content))
+                    {
+                        wxXmlModel.Content = AddRubbish(wxXmlModel.Content);
                     }
                     else
                     {
@@ -126,13 +155,21 @@ namespace Ilvbu.Service.Impl
                     }
                   
                 }
-
             }
             return WeChatXml.ResponseXML(wxXmlModel);
         }
-        //private string WechatGetMediaUrl = @"http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}";
+        public string WxImageAnalytical(WxXmlModel wxXmlModel, string token,string wxToken)
+        {
+            string url = string.Format(WechatGetMediaUrl, wxToken, wxXmlModel.MediaId);
+            byte[] data = NetHelper.HttpGetByte(url);
+            wxXmlModel.Content= UNIT.GetImageDisposeStr(data, token);
+            wxXmlModel.MsgType = "text";
+            return WeChatXml.ResponseXML(wxXmlModel);
+        }
+        private string WechatGetMediaUrl = @"http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}";
         private string WxVoiceAnalytical(WxXmlModel wxXmlModel, string token, string wxToken)
         {
+
             Console.WriteLine("WxVoiceAnalytical_Recognition>>" + wxXmlModel.Recognition);
             // string url = string.Format(WechatGetMediaUrl, wxToken, wxXmlModel.MediaId);
             if (string.IsNullOrEmpty(wxXmlModel.Recognition))
@@ -141,8 +178,12 @@ namespace Ilvbu.Service.Impl
             }
             else if (wxXmlModel.Recognition.Contains("是什么垃圾"))
             {
-                string rubbishName = wxXmlModel.Recognition.Replace("是什么垃圾", string.Empty).Replace("。",string.Empty).Replace(" ",string.Empty);
+                string rubbishName = DisposeName(wxXmlModel.Recognition, "是什么垃圾");
                 wxXmlModel.Content = RubbishDispose(rubbishName);
+            }
+            else if (IsAddRubbishType(wxXmlModel.Recognition))
+            {
+                wxXmlModel.Content = AddRubbish(wxXmlModel.Recognition);
             }
             else
             {
@@ -151,19 +192,49 @@ namespace Ilvbu.Service.Impl
                     wxXmlModel.Content = UNIT.GetResponseMessage(wxXmlModel.Recognition, wxXmlModel.FromUserName, token);
                 }
             }
-            wxXmlModel.MsgType = "text";
             return WeChatXml.ResponseXML(wxXmlModel);
+        }
+        public string DisposeName(string str,string replaceStr)
+        {
+            str = str.Replace(replaceStr, string.Empty);
+            str=Regex.Replace(str, "[ \\[ \\] \\^ \\-_*×――(^)（^）$%~!@#$…&%￥—+=<>《》!！??？:：•`·、。，；,.;\"‘’“”-]", "");
+            return str;
+        }
+        private bool IsAddRubbishType(string con)
+        {
+            return RubbishTypeNames.Keys.Any(c => con.Contains(c));
+        }
+        private string AddRubbish(string con)
+        {
+            var co = RubbishTypeNames.FirstOrDefault(c => con.Contains(c.Key));
+            RubbishType rubbishType = co.Value;
+            string rubbishName = DisposeName(con, co.Key);
+            if (_context.Rubbish.Any(c => c.RubbishName.Equals(rubbishName)))
+            {
+                return "我已经知道了！！";
+
+            }
+            else
+            {
+                _context.Rubbish.Add(new Rubbish()
+                {
+                    RubbishName = rubbishName,
+                    RubbishTypeId = rubbishType.Id
+                });
+                _context.SaveChanges();
+                return "我记住了！！";
+            }
         }
         public string RubbishDispose(string rubbishName)
         {
-            Rubbish rubbish = _context.Rubbish.Include(c=>c.RubbishType).FirstOrDefault(c => c.RubbishName.Contains(rubbishName));
+            Rubbish rubbish = _context.Rubbish.Include(c=>c.RubbishType).FirstOrDefault(c =>  rubbishName.Equals(c.RubbishName));
             if (rubbish != null)
             {
                 return rubbishName + "是"+ rubbish.RubbishType.RubbishTypeName +"哦。";
             }
             else
             {
-                return rubbishName + "是什么垃圾我也不知道哦,如果你知道了请告诉我把。";
+                return  string.Format("{0}是什么垃圾我也不知道哦,如果你知道了请告诉我把。你可以说({1}是xx垃圾)", rubbishName, rubbishName);
             }
         }
     }

@@ -17,6 +17,7 @@ namespace Ilvbu.Weixin
                     XML = ReText(WxXmlModel.FromUserName, WxXmlModel.ToUserName, WxXmlModel.Content);
                     break;
                 default://默认回复
+                    XML = ReText(WxXmlModel.FromUserName, WxXmlModel.ToUserName, WxXmlModel.Content);
                     break;
             }
             return XML;
@@ -60,6 +61,7 @@ namespace Ilvbu.Weixin
                     break;
                 case "image"://图片
                     WxXmlModel.PicUrl = rootElement.SelectSingleNode("PicUrl").InnerText;
+                    WxXmlModel.MediaId = rootElement.SelectSingleNode("MediaId").InnerText;
                     break;
                 case "event"://事件
                     WxXmlModel.Event = rootElement.SelectSingleNode("Event").InnerText;

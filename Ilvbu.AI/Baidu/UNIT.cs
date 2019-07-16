@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using static Ilvbu.AI.Baidu.UNITModels;
 
 namespace Ilvbu.AI.Baidu
@@ -63,7 +64,16 @@ namespace Ilvbu.AI.Baidu
                         say = res.action_list.FirstOrDefault().say
                     });
                 }
-                responreMessage = resultMessage.OrderByDescending(c => c.domain_confidence).FirstOrDefault().say;
+                if (resultMessage.Any(c => c.domain_confidence == 1))
+                {
+                    resultMessage = resultMessage.Where(c => c.domain_confidence == 1).ToList();
+                    Random reum = new Random();
+                    responreMessage = resultMessage[reum.Next(resultMessage.Count)].say;
+                }
+                else
+                {
+                    responreMessage = resultMessage.OrderByDescending(c => c.domain_confidence).FirstOrDefault().say;
+                }
             }
             catch (Exception o)
             {
@@ -72,5 +82,24 @@ namespace Ilvbu.AI.Baidu
 
             return responreMessage;
         }
+        public static string GetImageDisposeStr(byte[] data,string token)
+        {
+            string host = "https://aip.baidubce.com/rest/2.0/image-classify/v2/advanced_general?access_token=" + token;
+            string base64 = ConvertUtility.GetFileBase64(data);
+            String str = "image=" + HttpUtility.UrlEncode(base64);
+            BaiduImageRecognitionResult result = NetHelper.HttpPost<BaiduImageRecognitionResult>(host, str);
+            if(result.result != null && result.result.Any())
+            {
+                var bdresult = result.result.OrderByDescending(c => c.score).FirstOrDefault();
+                return bdresult.root + bdresult.keyword;
+            }
+            else
+            {
+                return "无法解析此图片";
+
+            }
+            
+        }
+
     }
 }
